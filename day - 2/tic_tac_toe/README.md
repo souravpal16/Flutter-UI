@@ -1,5 +1,5 @@
-# tic_tac_toe
-
+# Tic-Tac-Toe App
+ 
 UI credits: https://dribbble.com/shots/5271196-Tic-Tac-Toe-app
 
 
