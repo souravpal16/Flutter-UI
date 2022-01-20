@@ -1,7 +1,7 @@
-# Flutter-UI-30days
-Creating flutter UI's for the next 30 days to hone my flutter and dart skills. So help me god.
+# Flutter-UI-Practice
+Creating flutter UI's and putting them together to check my progress.
 
 
-Day 1 - Plant App UI<br>
-Day 2 - Tic Tac Toe Complete App <br>
-Day 3 - Furniture App UI <br>
+UI 1 - Plant App UI<br>
+UI 2 - Tic Tac Toe Complete App <br>
+UI 3 - Furniture App UI <br>
