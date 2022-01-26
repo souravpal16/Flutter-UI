@@ -3,8 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:task_app/screens/login_screen.dart';
 
 import '../services/network.dart';
+import '../widgets/auth_form_text_field.dart';
+import '../widgets/auth_form_buton_widget.dart';
 
 class SignupScreen extends StatefulWidget {
   static const String routeName = "/signup_screen";
@@ -16,64 +19,97 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  //late int _counter;
-
-  // late Future<int> futureInt;
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    //getCounter();
-    //futureInt = getCounter();
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff354f52),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 40,
         ),
-        child: Column(
-          children: [
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Name',
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 20,
               ),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Email',
+              Text(
+                'Daily',
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Color(0xffcad2c5),
+                ),
               ),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Password',
+              Text(
+                'Task Planner',
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Color(0xffcad2c5),
+                ),
               ),
-            ),
-            TextButton(
-              onPressed: () {
-                showDialogWidget(context);
-              },
-              child: Text('Sign Up'),
-            ),
-          ],
+              SizedBox(
+                height: 70,
+              ),
+              AuthFormTextField(
+                hint: 'Name',
+                controller: nameController,
+              ),
+              AuthFormTextField(
+                hint: 'Email',
+                controller: emailController,
+              ),
+              AuthFormTextField(
+                hint: 'Password',
+                controller: passwordController,
+              ),
+              GestureDetector(
+                onTap: () {
+                  showDialogWidget(
+                    context,
+                    nameController.text,
+                    emailController.text,
+                    passwordController.text,
+                  );
+                },
+                child: AuthButtonWidget(
+                  title: 'Sign Up',
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-void showDialogWidget(BuildContext context) {
+// void signUpButtonFunction(BuildContext context, String name, String email, String password) {
+//   showDialogWidget(context);
+// }
+
+void showDialogWidget(
+    BuildContext context, String name, String email, String password) {
   showDialog<String>(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) => AlertDialog(
       title: const Text('Checking connection...'),
       content: FutureBuilder<String>(
-        future: signupUser(),
+        future: signupUser(name, email, password),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Column(

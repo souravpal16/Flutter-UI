@@ -22,6 +22,7 @@ class TaskData with ChangeNotifier {
       (element) {
         _tasks.add(
           Task(
+            id: element['_id'],
             title: element['title'],
             isCompleted: element['isCompleted'],
           ),
@@ -34,18 +35,26 @@ class TaskData with ChangeNotifier {
   void addTask(String title) async {
     _tasks.add(Task(title: title));
     notifyListeners();
-    await createTaskOnServer(title);
+    final task = await createTaskOnServer(title);
+    String id = task['_id'];
+    _tasks[_tasks.length - 1].setId = id;
   }
 
   void changeTaskTitle(int index, String newTitle) async {
     _tasks[index].changeTitle(newTitle);
     notifyListeners();
-    //updateToServer(title);
+    Map<String, dynamic> updates = {
+      'title': newTitle,
+    };
+    await updateTaskOnServer(_tasks[index].id, updates);
   }
 
   void changeTaskStatus(int index) async {
     _tasks[index].changeStatus();
     notifyListeners();
-    //updateToServer(title);
+    Map<String, dynamic> updates = {
+      'isCompleted': _tasks[index].isCompleted,
+    };
+    await updateTaskOnServer(_tasks[index].id, updates);
   }
 }

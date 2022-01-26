@@ -24,9 +24,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: KbackgroundColor1,
         appBar: AppBar(
-          backgroundColor: color1,
+          backgroundColor: KbackgroundColor1,
           elevation: 0,
           leading: GestureDetector(
             onTap: () {

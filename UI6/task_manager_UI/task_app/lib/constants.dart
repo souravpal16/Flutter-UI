@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-Color KbackgroundColor = Colors.white;
+Color KbackgroundColor1 = Colors.white;
 
-Icon KIcon = Icon(Icons.menu);
+Icon KIcon = Icon(
+  Icons.menu,
+  color: Colors.black,
+);
+
+Color kbackgroundColor2 = Color(0xff005f73);
 
 Color color1 = const Color(0xffedf6f9);
 Color color2 = const Color(0xffF4F6FD);

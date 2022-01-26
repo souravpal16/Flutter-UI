@@ -7,6 +7,7 @@ import './screens/test_screen.dart';
 import './screens/test_screen2.dart';
 import './providers/task_provider.dart';
 import './screens/add_task_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,8 +22,12 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => TaskData(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
+          textTheme: GoogleFonts.poppinsTextTheme(
+            Theme.of(context).textTheme,
+          ),
           primarySwatch: Colors.blue,
         ),
         routes: {
