@@ -59,6 +59,7 @@ Future<String> loginUser(String email, String password) async {
   throw ('Error');
 }
 
+//GET
 Future<List<dynamic>> readTasks() async {
   String url1 = 'https://pal-task-manager.herokuapp.com/task/all';
   String url2 = 'http://192.168.29.37:3000/task/all';
@@ -79,6 +80,7 @@ Future<List<dynamic>> readTasks() async {
   return obj;
 }
 
+//POST
 Future<Map<String, dynamic>> createTaskOnServer(String title) async {
   String url1 = 'https://pal-task-manager.herokuapp.com/task/new';
   String url2 = 'http://192.168.29.37:3000/task/new';
@@ -101,6 +103,7 @@ Future<Map<String, dynamic>> createTaskOnServer(String title) async {
   return obj['result'];
 }
 
+//PUT
 Future<void> updateTaskOnServer(String id, Map<String, dynamic> updates) async {
   String taskid1 = '';
   String taskid2 = '61f06976a4b00cdd4ad1eb81';
@@ -127,4 +130,60 @@ Future<void> updateTaskOnServer(String id, Map<String, dynamic> updates) async {
 
   final obj = jsonDecode(response.body);
   print(obj);
+}
+
+//DELETE
+Future<void> removeTaskFromServer(String id) async {
+  String url = 'http://192.168.29.37:3000/task/$id';
+
+  String JWT_TOKEN = await loadToken();
+
+  final response = await http.delete(
+    Uri.parse(url),
+    headers: <String, String>{
+      HttpHeaders.authorizationHeader: JWT_TOKEN,
+    },
+  );
+
+  final obj = jsonDecode(response.body);
+
+  print(obj);
+}
+
+Future<void> logoutUserFromServer() async {
+  String url = 'http://192.168.29.37:3000/user/logout';
+
+  String JWT_TOKEN = await loadToken();
+
+  final response = await http.post(
+    Uri.parse(url),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      HttpHeaders.authorizationHeader: JWT_TOKEN,
+    },
+  );
+
+  final obj = jsonDecode(response.body);
+  print(obj);
+}
+
+Future<void> logoutUser() async {
+  String url1 = 'https://pal-task-manager.herokuapp.com/user/logout';
+  String url2 = 'http://127.0.0.1:3000/user/logout';
+
+  String jwt1 =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWVlNzgzMGViZTUxNTE1ZWFiY2UxMjAiLCJpYXQiOjE2NDMwMTgyODh9.jJ-WJa_7NOfyryRaEFM-aNmUMSO-ICkcZsD0uREsuZg';
+
+  String jwt2 =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWVlNzljMDM5MzFhODYxMWFlZWZhZWYiLCJpYXQiOjE2NDMwMTg2OTB9.KBgIuwG-aZHvgYOt72yTCmHML3VWomP8Hi5g8PrqZHM';
+
+  final response = await http.post(
+    Uri.parse(url1),
+    headers: {
+      'content-type': 'application/json; charset=UTF-8',
+      HttpHeaders.authorizationHeader: jwt1,
+    },
+  );
+
+  print(response.body);
 }

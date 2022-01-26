@@ -43,46 +43,99 @@ class TaskListWidget extends StatelessWidget {
                     .changeTaskStatus(index);
               },
               child: Container(
-                margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 20,
-                      height: 20,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      child: status
-                          ? Icon(
-                              Icons.done,
-                              color: Colors.black,
-                              size: 15,
-                            )
-                          : null,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      tasks[index].title,
-                      style: TextStyle(
-                        fontSize: 25,
-                        decoration: tasks[index].isCompleted
-                            ? TextDecoration.lineThrough
-                            : TextDecoration.none,
-                      ),
-                    ),
-                  ],
+                margin: EdgeInsets.symmetric(
+                  vertical: 5,
+                  horizontal: 5,
+                ),
+                child: TaskTileWidget(
+                  status: status,
+                  task: tasks[index],
+                  index: index,
                 ),
               ),
             );
           },
         ),
       ],
+    );
+  }
+}
+
+class TaskTileWidget extends StatelessWidget {
+  const TaskTileWidget({
+    Key? key,
+    required this.status,
+    required this.task,
+    required this.index,
+  }) : super(key: key);
+
+  final bool status;
+  final Task task;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Dismissible(
+      key: ValueKey<int>(index),
+      background: Container(
+        color: Colors.red,
+        child: Icon(
+          Icons.delete,
+        ),
+      ),
+      onDismissed: (DismissDirection direction) {
+        Provider.of<TaskData>(context, listen: false).removeTask(task);
+      },
+      child: Container(
+        margin: EdgeInsets.only(
+          top: 10,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(5, 2),
+              color: Colors.black26,
+              //blurRadius: 10,
+              spreadRadius: 0,
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 20,
+              height: 20,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.black,
+                  width: 2.0,
+                ),
+              ),
+              child: status
+                  ? Icon(
+                      Icons.done,
+                      color: Colors.black,
+                      size: 15,
+                    )
+                  : null,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              task.title,
+              style: TextStyle(
+                fontSize: 25,
+                decoration: task.isCompleted
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -40,6 +40,12 @@ class TaskData with ChangeNotifier {
     _tasks[_tasks.length - 1].setId = id;
   }
 
+  void removeTask(Task task) async {
+    _tasks.remove(task);
+    notifyListeners();
+    await removeTaskFromServer(task.id);
+  }
+
   void changeTaskTitle(int index, String newTitle) async {
     _tasks[index].changeTitle(newTitle);
     notifyListeners();
