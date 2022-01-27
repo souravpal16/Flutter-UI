@@ -20,20 +20,16 @@ class UserScreen extends StatefulWidget {
 class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: KbackgroundColor1,
-      // appBar: AppBar(
-      //   leading: IconButton(
-      //     icon: KIcon,
-      //     onPressed: () {},
-      //   ),
-      //   backgroundColor: KbackgroundColor,
-      //   elevation: 0,
-      // ),
-      floatingActionButton: FloatingActionbuttonWidget(),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Body(),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: kBackgroundColor,
+        floatingActionButton: FloatingActionbuttonWidget(),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+          ),
+          child: Body(),
+        ),
       ),
     );
   }

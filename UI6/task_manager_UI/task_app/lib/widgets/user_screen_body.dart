@@ -20,29 +20,46 @@ class Body extends StatelessWidget {
           SizedBox(
             height: 30,
           ),
-          userNameTextWidget(),
-          SizedBox(height: 20),
-          IconButton(
-            icon: Icon(
-              Icons.logout,
-            ),
-            onPressed: () async {
-              //plan is to show a dialog box
-              //for now just await would do.
-              await logoutUserFromServer();
-              //first logout from server as jwt token is needed
-              //Then remove the token.ss
-              await logoutProcedure();
-              Navigator.popAndPushNamed(
-                context,
-                '/',
-              );
-            },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              userNameTextWidget(),
+              LogoutIcon(),
+            ],
           ),
+          SizedBox(height: 20),
           SizedBox(height: 20),
           TaskListWidget(),
         ],
       ),
+    );
+  }
+}
+
+class LogoutIcon extends StatelessWidget {
+  const LogoutIcon({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(
+        Icons.logout,
+        size: 30,
+      ),
+      onPressed: () async {
+        //plan is to show a dialog box
+        //for now just await would do.
+        await logoutUserFromServer();
+        //first logout from server as jwt token is needed
+        //Then remove the token.ss
+        await logoutProcedure();
+        Navigator.popAndPushNamed(
+          context,
+          '/',
+        );
+      },
     );
   }
 }

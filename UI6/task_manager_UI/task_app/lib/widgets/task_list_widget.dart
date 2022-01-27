@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_app/constants.dart';
 import '../providers/task_provider.dart';
 import '../models/task.dart';
 import 'package:provider/provider.dart';
@@ -19,14 +20,12 @@ class TaskListWidget extends StatelessWidget {
             horizontal: 5,
           ),
           child: Text(
-            'To-do',
+            'TODAY\'s TASKS',
             //'${tasks.length} Tasks',
             style: TextStyle(
               color: Colors.grey,
               fontWeight: FontWeight.bold,
-              fontSize: 30,
-              decoration: TextDecoration.underline,
-              decorationStyle: TextDecorationStyle.dashed,
+              fontSize: 20,
             ),
           ),
         ),
@@ -76,7 +75,7 @@ class TaskTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: ValueKey<int>(index),
+      key: ValueKey<String>(task.id),
       background: Container(
         color: Colors.red,
         child: Icon(
@@ -87,11 +86,18 @@ class TaskTileWidget extends StatelessWidget {
         Provider.of<TaskData>(context, listen: false).removeTask(task);
       },
       child: Container(
+        padding: EdgeInsets.only(
+          top: 10,
+          bottom: 10,
+        ),
         margin: EdgeInsets.only(
           top: 10,
         ),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: kBackgroundColor,
+          borderRadius: BorderRadius.circular(
+            15,
+          ),
           boxShadow: [
             BoxShadow(
               offset: Offset(5, 2),
@@ -103,23 +109,29 @@ class TaskTileWidget extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Container(
-              width: 20,
-              height: 20,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.black,
-                  width: 2.0,
+            GestureDetector(
+              onTap: () {
+                Provider.of<TaskData>(context, listen: false)
+                    .changeTaskStatus(index);
+              },
+              child: Container(
+                width: 25,
+                height: 25,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 2.0,
+                  ),
                 ),
+                child: status
+                    ? Icon(
+                        Icons.done,
+                        color: Colors.black,
+                        size: 20,
+                      )
+                    : null,
               ),
-              child: status
-                  ? Icon(
-                      Icons.done,
-                      color: Colors.black,
-                      size: 15,
-                    )
-                  : null,
             ),
             SizedBox(
               width: 10,
@@ -127,7 +139,7 @@ class TaskTileWidget extends StatelessWidget {
             Text(
               task.title,
               style: TextStyle(
-                fontSize: 25,
+                fontSize: 20,
                 decoration: task.isCompleted
                     ? TextDecoration.lineThrough
                     : TextDecoration.none,

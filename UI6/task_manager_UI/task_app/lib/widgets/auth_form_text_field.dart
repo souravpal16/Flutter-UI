@@ -14,8 +14,8 @@ class AuthFormTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color(0xffcad2c5),
-        borderRadius: BorderRadius.circular(20),
+        color: Colors.grey.shade300,
+        borderRadius: BorderRadius.circular(70),
       ),
       margin: EdgeInsets.symmetric(
         vertical: 5,

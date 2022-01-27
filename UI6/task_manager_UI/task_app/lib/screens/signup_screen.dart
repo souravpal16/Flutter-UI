@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:task_app/constants.dart';
 import 'package:task_app/screens/login_screen.dart';
+import 'package:task_app/widgets/banner_widget.dart';
 
 import '../services/network.dart';
 import '../widgets/auth_form_text_field.dart';
@@ -34,61 +36,52 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xff354f52),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 40,
-        ),
-        child: SingleChildScrollView(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: kBackgroundColor,
+        body: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Daily',
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Color(0xffcad2c5),
+              BannerWidget(),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 40,
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 50,
+                    ),
+                    AuthFormTextField(
+                      hint: 'Name',
+                      controller: nameController,
+                    ),
+                    AuthFormTextField(
+                      hint: 'Email',
+                      controller: emailController,
+                    ),
+                    AuthFormTextField(
+                      hint: 'Password',
+                      controller: passwordController,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        showDialogWidget(
+                          context,
+                          nameController.text,
+                          emailController.text,
+                          passwordController.text,
+                        );
+                      },
+                      child: AuthButtonWidget(
+                        title: 'Sign Up',
+                        color: kPrimaryColor1,
+                      ),
+                    )
+                  ],
                 ),
               ),
-              Text(
-                'Task Planner',
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Color(0xffcad2c5),
-                ),
-              ),
-              SizedBox(
-                height: 70,
-              ),
-              AuthFormTextField(
-                hint: 'Name',
-                controller: nameController,
-              ),
-              AuthFormTextField(
-                hint: 'Email',
-                controller: emailController,
-              ),
-              AuthFormTextField(
-                hint: 'Password',
-                controller: passwordController,
-              ),
-              GestureDetector(
-                onTap: () {
-                  showDialogWidget(
-                    context,
-                    nameController.text,
-                    emailController.text,
-                    passwordController.text,
-                  );
-                },
-                child: AuthButtonWidget(
-                  title: 'Sign Up',
-                ),
-              )
             ],
           ),
         ),

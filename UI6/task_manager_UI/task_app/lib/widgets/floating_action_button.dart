@@ -10,10 +10,10 @@ class FloatingActionbuttonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: color6,
+      backgroundColor: kBannerColor,
       child: Icon(
         Icons.add,
-        color: color2,
+        color: Colors.white,
       ),
       onPressed: () {
         Navigator.pushNamed(context, AddTaskScreen.routeName);

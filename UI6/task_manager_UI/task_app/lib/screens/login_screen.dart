@@ -12,6 +12,7 @@ import '../providers/task_provider.dart';
 import '../widgets/auth_form_text_field.dart';
 import '../services/network.dart';
 import '../widgets/auth_form_buton_widget.dart';
+import '../widgets/banner_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/loginScreen';
@@ -36,71 +37,84 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xff354f52),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 40,
-        ),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Daily',
-              style: TextStyle(
-                fontSize: 30,
-                color: Color(0xffcad2c5),
-              ),
-            ),
-            Text(
-              'Task Planner',
-              style: TextStyle(
-                fontSize: 30,
-                color: Color(0xffcad2c5),
-              ),
-            ),
-            SizedBox(
-              height: 70,
-            ),
-            AuthFormTextField(
-              hint: 'Email',
-              controller: emailController,
-            ),
-            AuthFormTextField(
-              hint: 'Password',
-              controller: passwordController,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    signUpButtonFunction(context);
-                  },
-                  child: AuthButtonWidget(
-                    title: 'Sign Up',
-                  ),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: kBackgroundColor,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              BannerWidget(),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 40,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    loginButtonFunction(
-                      context,
-                      emailController.text,
-                      passwordController.text,
-                    );
-                  },
-                  child: AuthButtonWidget(
-                    title: 'Login',
-                  ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 50,
+                    ),
+                    AuthFormTextField(
+                      hint: 'Email',
+                      controller: emailController,
+                    ),
+                    AuthFormTextField(
+                      hint: 'Password',
+                      controller: passwordController,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    ButtonRow(
+                      emailController: emailController,
+                      passwordController: passwordController,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
+    );
+  }
+}
+
+class ButtonRow extends StatelessWidget {
+  const ButtonRow({
+    Key? key,
+    required this.emailController,
+    required this.passwordController,
+  }) : super(key: key);
+
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () {
+            signUpButtonFunction(context);
+          },
+          child: AuthButtonWidget(
+            title: 'Sign Up',
+            color: kPrimaryColor1,
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            loginButtonFunction(
+              context,
+              emailController.text,
+              passwordController.text,
+            );
+          },
+          child: AuthButtonWidget(title: 'Login', color: kPrimaryColor2),
+        ),
+      ],
     );
   }
 }
@@ -131,28 +145,51 @@ Future<void> showDialogWidget(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) => AlertDialog(
-      title: const Text('Checking connection...'),
+      title: const Text('Logging in...'),
       content: FutureBuilder<String>(
         future: loggingUserAndLoadingTasks(context, email, password),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text('${snapshot.data}'),
-                TextButton(
-                  child: Text('OK'),
-                  onPressed: () {
+                SizedBox(
+                  height: 10,
+                ),
+                GestureDetector(
+                  onTap: () {
                     Navigator.popAndPushNamed(context, UserScreen.routeName);
                   },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.grey.shade300,
+                    ),
+                    child: Text(
+                      'OK',
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
                 )
               ],
             );
           } else if (snapshot.hasError) {
             return Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text('${snapshot.error}'),
                 TextButton(
-                  child: Text('OK'),
+                  child: Text(
+                    'OK',
+                  ),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -161,6 +198,7 @@ Future<void> showDialogWidget(
             );
           }
           return Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               CircularProgressIndicator(),
             ],

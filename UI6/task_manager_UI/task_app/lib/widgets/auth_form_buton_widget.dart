@@ -5,9 +5,11 @@ class AuthButtonWidget extends StatelessWidget {
   const AuthButtonWidget({
     Key? key,
     required this.title,
+    required this.color,
   }) : super(key: key);
 
   final String title;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class AuthButtonWidget extends StatelessWidget {
         horizontal: 20,
       ),
       decoration: BoxDecoration(
-        color: Color(0xff74c69d),
+        color: color,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Center(

@@ -24,9 +24,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: KbackgroundColor1,
+        backgroundColor: kBackgroundColor,
         appBar: AppBar(
-          backgroundColor: KbackgroundColor1,
+          backgroundColor: kBackgroundColor,
           elevation: 0,
           leading: GestureDetector(
             onTap: () {
@@ -34,7 +34,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             },
             child: Icon(
               Icons.arrow_back,
-              color: color4,
+              color: Colors.grey,
               size: 30,
             ),
           ),
@@ -50,14 +50,16 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               child: TextField(
                 controller: myController,
                 style: TextStyle(
-                  color: color3,
+                  color: kTextColor,
                 ),
-                cursorColor: color6,
+                cursorColor: kPrimaryColor2,
                 decoration: InputDecoration(
                   hintText: 'Create a new task',
-                  focusColor: color7,
+                  //focusColor: color7,
                   focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: color6),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                    ),
                   ),
                 ),
               ),
@@ -81,12 +83,17 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     },
                     child: Container(
                       child: Center(
-                        child: Text('Create', style: style4),
+                        child: Text(
+                          'Create',
+                          style: TextStyle(
+                            color: kBackgroundColor,
+                          ),
+                        ),
                       ),
                       width: 120,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: color6,
+                        color: kBannerColor,
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
