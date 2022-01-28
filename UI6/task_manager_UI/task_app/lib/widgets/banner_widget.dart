@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import './banner_text.dart';
 import '../constants.dart';
 
 class BannerWidget extends StatelessWidget {
@@ -21,19 +21,7 @@ class BannerWidget extends StatelessWidget {
           bottomRight: Radius.circular(90),
         ),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'DAILY',
-            style: kBannerTextStyle,
-          ),
-          Text(
-            'TASK PLANNER',
-            style: kBannerTextStyle,
-          ),
-        ],
-      ),
+      child: BannerText(),
     );
   }
 }

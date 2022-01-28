@@ -6,3 +6,10 @@ Future<String> loadToken() async {
 
   return JWT_TOKEN;
 }
+
+Future<bool> checkToken() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String JWT_TOKEN = prefs.getString('token') ?? '';
+
+  return JWT_TOKEN != '';
+}

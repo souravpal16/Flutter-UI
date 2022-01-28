@@ -58,7 +58,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   //focusColor: color7,
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.red,
+                      color: kPrimaryColor2,
                     ),
                   ),
                 ),

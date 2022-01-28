@@ -57,7 +57,7 @@ class LogoutIcon extends StatelessWidget {
         await logoutProcedure();
         Navigator.popAndPushNamed(
           context,
-          '/',
+          LoginScreen.routeName,
         );
       },
     );

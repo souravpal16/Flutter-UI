@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_app/screens/landing_page.dart';
 import 'package:task_app/screens/user_screen.dart';
 import 'screens/login_screen.dart';
 import './screens/signup_screen.dart';
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         routes: {
-          '/': (context) => LoginScreen(),
+          '/': (context) => LandingPage(),
+          LoginScreen.routeName: (context) => LoginScreen(),
           SignupScreen.routeName: (context) => SignupScreen(),
           UserScreen.routeName: (context) => UserScreen(),
           AddTaskScreen.routeName: (context) => AddTaskScreen(),

@@ -5,8 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:task_app/constants.dart';
 import 'package:task_app/screens/login_screen.dart';
+import 'package:task_app/screens/user_screen.dart';
 import 'package:task_app/widgets/banner_widget.dart';
-
+import '../widgets/ok_button_chip_widget.dart';
 import '../services/network.dart';
 import '../widgets/auth_form_text_field.dart';
 import '../widgets/auth_form_buton_widget.dart';
@@ -100,19 +101,20 @@ void showDialogWidget(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) => AlertDialog(
-      title: const Text('Checking connection...'),
+      title: const Text('Signing Up...'),
       content: FutureBuilder<String>(
         future: signupUser(name, email, password),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text('${snapshot.data}'),
-                TextButton(
-                  child: Text('OK'),
-                  onPressed: () {
-                    Navigator.pop(context);
+                GestureDetector(
+                  onTap: () {
+                    Navigator.popAndPushNamed(context, UserScreen.routeName);
                   },
+                  child: OkButtonChipWidget(),
                 )
               ],
             );

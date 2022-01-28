@@ -13,6 +13,7 @@ import '../widgets/auth_form_text_field.dart';
 import '../services/network.dart';
 import '../widgets/auth_form_buton_widget.dart';
 import '../widgets/banner_widget.dart';
+import '../widgets/ok_button_chip_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/loginScreen';
@@ -133,8 +134,8 @@ Future<String> loggingUserAndLoadingTasks(
     BuildContext context, String email, String password) async {
   String result = await loginUser(email, password);
 
-  String ans =
-      await Provider.of<TaskData>(context, listen: false).populateTasks();
+  // String ans =
+  //     await Provider.of<TaskData>(context, listen: false).populateTasks();
 
   return result;
 }
@@ -161,23 +162,7 @@ Future<void> showDialogWidget(
                   onTap: () {
                     Navigator.popAndPushNamed(context, UserScreen.routeName);
                   },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.grey.shade300,
-                    ),
-                    child: Text(
-                      'OK',
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
+                  child: OkButtonChipWidget(),
                 )
               ],
             );

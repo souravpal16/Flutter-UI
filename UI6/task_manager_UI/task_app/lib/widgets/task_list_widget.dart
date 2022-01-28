@@ -11,51 +11,89 @@ class TaskListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Task> tasks = Provider.of<TaskData>(context).tasks;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          margin: EdgeInsets.symmetric(
-            horizontal: 5,
-          ),
-          child: Text(
-            'TODAY\'s TASKS',
-            //'${tasks.length} Tasks',
-            style: TextStyle(
-              color: Colors.grey,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
+        TaskListHeadingWidget(),
+        FutureBuilder<String>(
+            future: getTasks(context),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return MainTaskListWidget();
+              } else if (snapshot.hasError) {
+                return Text('Could not load tasks');
+              }
+              return CircularProgressIndicator();
+            }),
+        //MainTaskListWidget(),
+      ],
+    );
+  }
+}
+
+Future<String> getTasks(BuildContext context) async {
+  final ans =
+      await Provider.of<TaskData>(context, listen: false).populateTasks();
+  return ans;
+}
+
+class MainTaskListWidget extends StatelessWidget {
+  const MainTaskListWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    List<Task> tasks = Provider.of<TaskData>(context).tasks;
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: tasks.length,
+      itemBuilder: (context, index) {
+        //print(tasks[index].isCompleted);
+        bool status = tasks[index].isCompleted;
+        return GestureDetector(
+          onDoubleTap: () {
+            Provider.of<TaskData>(context, listen: false)
+                .changeTaskStatus(index);
+          },
+          child: Container(
+            margin: EdgeInsets.symmetric(
+              vertical: 5,
+              horizontal: 5,
+            ),
+            child: TaskTileWidget(
+              status: status,
+              task: tasks[index],
+              index: index,
             ),
           ),
+        );
+      },
+    );
+  }
+}
+
+class TaskListHeadingWidget extends StatelessWidget {
+  const TaskListHeadingWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(
+        horizontal: 5,
+      ),
+      child: Text(
+        'TODAY\'S TASKS',
+        //'${tasks.length} Tasks',
+        style: TextStyle(
+          color: Colors.grey,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
         ),
-        ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: tasks.length,
-          itemBuilder: (context, index) {
-            //print(tasks[index].isCompleted);
-            bool status = tasks[index].isCompleted;
-            return GestureDetector(
-              onDoubleTap: () {
-                Provider.of<TaskData>(context, listen: false)
-                    .changeTaskStatus(index);
-              },
-              child: Container(
-                margin: EdgeInsets.symmetric(
-                  vertical: 5,
-                  horizontal: 5,
-                ),
-                child: TaskTileWidget(
-                  status: status,
-                  task: tasks[index],
-                  index: index,
-                ),
-              ),
-            );
-          },
-        ),
-      ],
+      ),
     );
   }
 }
@@ -89,6 +127,7 @@ class TaskTileWidget extends StatelessWidget {
         padding: EdgeInsets.only(
           top: 10,
           bottom: 10,
+          left: 10,
         ),
         margin: EdgeInsets.only(
           top: 10,
@@ -100,7 +139,7 @@ class TaskTileWidget extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              offset: Offset(5, 2),
+              offset: Offset(2, 2),
               color: Colors.black26,
               //blurRadius: 10,
               spreadRadius: 0,
