@@ -1,14 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import './signup_screen.dart';
 import './user_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 import '../constants.dart';
-import 'package:provider/provider.dart';
-import '../models/task.dart';
-import '../providers/task_provider.dart';
 import '../widgets/auth_form_text_field.dart';
 import '../services/network.dart';
 import '../widgets/auth_form_buton_widget.dart';
@@ -40,7 +33,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: kBackgroundColor,
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -113,7 +105,10 @@ class ButtonRow extends StatelessWidget {
               passwordController.text,
             );
           },
-          child: AuthButtonWidget(title: 'Login', color: kPrimaryColor2),
+          child: AuthButtonWidget(
+            title: 'Login',
+            color: Theme.of(context).primaryColorLight,
+          ),
         ),
       ],
     );
@@ -123,7 +118,71 @@ class ButtonRow extends StatelessWidget {
 //helper function
 
 void signUpButtonFunction(BuildContext context) {
-  Navigator.pushNamed(context, SignupScreen.routeName);
+  // Navigator.pushNamed(context, SignupScreen.routeName);
+  //Navigator.push(context, _createRoute());
+  Navigator.push(
+    context,
+    FadeInRoute(page: SignupScreen(), routeName: SignupScreen.routeName),
+  );
+}
+
+Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => SignupScreen(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(-1, 0);
+      const end = Offset.zero;
+
+      final tween = Tween(begin: begin, end: end);
+
+      final curvedAnimation = CurvedAnimation(
+        parent: animation,
+        curve: Curves.ease,
+      );
+
+      return SlideTransition(
+        position: tween.animate(curvedAnimation),
+        child: child,
+      );
+    },
+  );
+}
+
+class FadeInRoute extends PageRouteBuilder {
+  final Widget page;
+
+  FadeInRoute({required this.page, required String routeName})
+      : super(
+          settings: RouteSettings(name: routeName), // set name here
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) {
+            const begin = Offset(-1, 0);
+            const end = Offset.zero;
+
+            final tween = Tween(begin: begin, end: end);
+
+            final curvedAnimation = CurvedAnimation(
+              parent: animation,
+              curve: Curves.ease,
+            );
+
+            return SlideTransition(
+              position: tween.animate(curvedAnimation),
+              child: child,
+            );
+          },
+          transitionDuration: Duration(milliseconds: 500),
+        );
 }
 
 void loginButtonFunction(BuildContext context, email, password) async {
@@ -133,9 +192,6 @@ void loginButtonFunction(BuildContext context, email, password) async {
 Future<String> loggingUserAndLoadingTasks(
     BuildContext context, String email, String password) async {
   String result = await loginUser(email, password);
-
-  // String ans =
-  //     await Provider.of<TaskData>(context, listen: false).populateTasks();
 
   return result;
 }

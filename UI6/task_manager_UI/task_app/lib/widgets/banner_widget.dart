@@ -15,7 +15,7 @@ class BannerWidget extends StatelessWidget {
       height: size.height * 0.35,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: kBannerColor,
+        color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(90),
           bottomRight: Radius.circular(90),

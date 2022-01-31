@@ -4,11 +4,10 @@ import 'package:task_app/screens/landing_page.dart';
 import 'package:task_app/screens/user_screen.dart';
 import 'screens/login_screen.dart';
 import './screens/signup_screen.dart';
-import './screens/test_screen.dart';
-import './screens/test_screen2.dart';
 import './providers/task_provider.dart';
 import './screens/add_task_screen.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'constants.dart';
+import './providers/theme_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,25 +19,44 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => TaskData(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          textTheme: GoogleFonts.poppinsTextTheme(
-            Theme.of(context).textTheme,
-          ),
-          primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => TaskData(),
         ),
-        routes: {
-          '/': (context) => LandingPage(),
-          LoginScreen.routeName: (context) => LoginScreen(),
-          SignupScreen.routeName: (context) => SignupScreen(),
-          UserScreen.routeName: (context) => UserScreen(),
-          AddTaskScreen.routeName: (context) => AddTaskScreen(),
-        },
+        ChangeNotifierProvider(
+          create: (_) => ThemeProvider(),
+        ),
+      ],
+      child: Consumer<ThemeProvider>(
+        builder: (context, ThemeProvider, child) =>
+            child ?? Text('hello world'),
+        child: MainAppBegins(),
       ),
+    );
+  }
+}
+
+class MainAppBegins extends StatelessWidget {
+  const MainAppBegins({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: Provider.of<ThemeProvider>(context).light
+          ? lightTheme(context)
+          : darkTheme(context),
+      routes: {
+        '/': (context) => LandingPage(),
+        LoginScreen.routeName: (context) => LoginScreen(),
+        SignupScreen.routeName: (context) => SignupScreen(),
+        UserScreen.routeName: (context) => UserScreen(),
+        AddTaskScreen.routeName: (context) => AddTaskScreen(),
+      },
     );
   }
 }

@@ -15,7 +15,6 @@ class UserScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: kBackgroundColor,
         floatingActionButton: FloatingActionbuttonWidget(),
         body: Padding(
           padding: const EdgeInsets.symmetric(

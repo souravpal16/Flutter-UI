@@ -44,7 +44,7 @@ class _LandingPageState extends State<LandingPage> {
         } else if (snapshot.hasError) {}
         print('Normal branding page');
         return Scaffold(
-          backgroundColor: kBannerColor,
+          backgroundColor: Theme.of(context).primaryColor,
           body: BannerText(),
         );
       },

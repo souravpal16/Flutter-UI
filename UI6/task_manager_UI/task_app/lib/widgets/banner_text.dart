@@ -14,11 +14,11 @@ class BannerText extends StatelessWidget {
       children: [
         Text(
           'DAILY',
-          style: kBannerTextStyle,
+          style: kBannerTextStyle(context),
         ),
         Text(
           'TASK PLANNER',
-          style: kBannerTextStyle,
+          style: kBannerTextStyle(context),
         ),
       ],
     );

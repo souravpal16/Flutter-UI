@@ -30,7 +30,7 @@ Future<String> signupUser(String name, String email, String password) async {
     return 'Done';
   }
 
-  return "Error";
+  throw "Error";
 }
 
 Future<String> loginUser(String email, String password) async {

@@ -24,9 +24,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: kBackgroundColor,
         appBar: AppBar(
-          backgroundColor: kBackgroundColor,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
           leading: GestureDetector(
             onTap: () {
@@ -34,7 +33,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             },
             child: Icon(
               Icons.arrow_back,
-              color: Colors.grey,
+              color:
+                  Theme.of(context).textTheme.bodyText2?.color ?? Colors.black,
               size: 30,
             ),
           ),
@@ -50,15 +50,25 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               child: TextField(
                 controller: myController,
                 style: TextStyle(
-                  color: kTextColor,
+                  color: Theme.of(context).textTheme.bodyText2?.color,
                 ),
-                cursorColor: kPrimaryColor2,
+                cursorColor: Theme.of(context).primaryColor,
                 decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).textTheme.bodyText2?.color ??
+                          Colors.black,
+                    ),
+                  ),
+
                   hintText: 'Create a new task',
                   //focusColor: color7,
+                  hintStyle: TextStyle(
+                    color: Theme.of(context).textTheme.bodyText2?.color,
+                  ),
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: kPrimaryColor2,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
                 ),
@@ -86,14 +96,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         child: Text(
                           'Create',
                           style: TextStyle(
-                            color: kBackgroundColor,
+                            color: Theme.of(context).textTheme.bodyText1?.color,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                       width: 120,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: kBannerColor,
+                        color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),

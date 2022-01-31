@@ -133,14 +133,15 @@ class TaskTileWidget extends StatelessWidget {
           top: 10,
         ),
         decoration: BoxDecoration(
-          color: kBackgroundColor,
+          color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(
             15,
           ),
           boxShadow: [
             BoxShadow(
               offset: Offset(2, 2),
-              color: Colors.black26,
+              color:
+                  Theme.of(context).textTheme.bodyText2?.color ?? Colors.black,
               //blurRadius: 10,
               spreadRadius: 0,
             ),
@@ -159,14 +160,15 @@ class TaskTileWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Colors.black,
+                    color: Theme.of(context).textTheme.bodyText2?.color ??
+                        Colors.black,
                     width: 2.0,
                   ),
                 ),
                 child: status
                     ? Icon(
                         Icons.done,
-                        color: Colors.black,
+                        color: Theme.of(context).textTheme.bodyText2?.color,
                         size: 20,
                       )
                     : null,

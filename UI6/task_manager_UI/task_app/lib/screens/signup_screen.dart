@@ -1,10 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 import 'package:task_app/constants.dart';
-import 'package:task_app/screens/login_screen.dart';
 import 'package:task_app/screens/user_screen.dart';
 import 'package:task_app/widgets/banner_widget.dart';
 import '../widgets/ok_button_chip_widget.dart';
@@ -39,7 +34,6 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: kBackgroundColor,
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -120,6 +114,7 @@ void showDialogWidget(
             );
           } else if (snapshot.hasError) {
             return Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text('${snapshot.error}'),
                 TextButton(
@@ -132,6 +127,7 @@ void showDialogWidget(
             );
           }
           return Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               CircularProgressIndicator(),
             ],

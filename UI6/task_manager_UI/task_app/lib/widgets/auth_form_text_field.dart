@@ -14,7 +14,7 @@ class AuthFormTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade300,
+        color: Theme.of(context).primaryColorDark,
         borderRadius: BorderRadius.circular(70),
       ),
       margin: EdgeInsets.symmetric(
@@ -27,16 +27,16 @@ class AuthFormTextField extends StatelessWidget {
       child: TextField(
         controller: controller,
         style: TextStyle(
-          color: Color(0xff283618),
-        ),
+            //color: Color(0xff283618),
+            ),
         decoration: InputDecoration(
           labelText: hint,
           focusedBorder: InputBorder.none,
           enabledBorder: InputBorder.none,
           labelStyle: TextStyle(
-            color: Color(0xff1b4332),
+            color: Theme.of(context).textTheme.bodyText1?.color,
           ),
-          //hintText: hint,
+          hintText: hint,
         ),
       ),
     );
