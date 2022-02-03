@@ -2,16 +2,18 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/token_shared_preference.dart';
 import '../utils/set_shared_preferences.dart';
 
+const String url1 = 'https://pal-task-manager.herokuapp.com';
+const String url2 = 'http://192.168.29.37:3000';
+String domain = url1;
+
 Future<String> signupUser(String name, String email, String password) async {
-  String url1 = 'https://pal-task-manager.herokuapp.com/user/new';
-  String url2 = 'http://192.168.29.37:3000/user/new';
+  String url = domain + '/user/new';
 
   final response = await http.post(
-    Uri.parse(url2),
+    Uri.parse(url),
     headers: {
       'content-type': 'application/json; charset=UTF-8',
     },
@@ -36,9 +38,10 @@ Future<String> signupUser(String name, String email, String password) async {
 Future<String> loginUser(String email, String password) async {
   String url1 = 'https://pal-task-manager.herokuapp.com/user/login';
   String url2 = 'http://192.168.29.37:3000/user/login';
+  String url = domain + '/user/login';
 
   final response = await http.post(
-    Uri.parse(url2),
+    Uri.parse(url),
     headers: {
       'content-type': 'application/json; charset=UTF-8',
     },
@@ -64,11 +67,12 @@ Future<List<dynamic>> readTasks() async {
   String url1 = 'https://pal-task-manager.herokuapp.com/task/all';
   String url2 = 'http://192.168.29.37:3000/task/all';
 
+  String url = domain + '/task/all';
+
   String JWT_TOKEN = await loadToken();
-  print('JWT: ' + JWT_TOKEN);
 
   final response = await http.get(
-    Uri.parse(url2),
+    Uri.parse(url),
     headers: {
       'content-type': 'application/json; charset=UTF-8',
       HttpHeaders.authorizationHeader: JWT_TOKEN,
@@ -76,7 +80,6 @@ Future<List<dynamic>> readTasks() async {
   );
 
   final obj = jsonDecode(response.body);
-  print(obj);
   return obj;
 }
 
@@ -85,11 +88,12 @@ Future<Map<String, dynamic>> createTaskOnServer(String title) async {
   String url1 = 'https://pal-task-manager.herokuapp.com/task/new';
   String url2 = 'http://192.168.29.37:3000/task/new';
 
+  String url = domain + '/task/new';
+
   String JWT_TOKEN = await loadToken();
-  print('JWT: ' + JWT_TOKEN);
 
   final response = await http.post(
-    Uri.parse(url2),
+    Uri.parse(url),
     headers: {
       'content-type': 'application/json; charset=UTF-8',
       HttpHeaders.authorizationHeader: JWT_TOKEN,
@@ -105,15 +109,8 @@ Future<Map<String, dynamic>> createTaskOnServer(String title) async {
 
 //PUT
 Future<void> updateTaskOnServer(String id, Map<String, dynamic> updates) async {
-  String taskid1 = '';
-  String taskid2 = '61f06976a4b00cdd4ad1eb81';
-
-  String url1 = '';
-  String url2 = 'http://127.0.0.1:3000/task/${id}';
-  String jwt1 = '';
-  String jwt2 = '';
-
-  String url = 'http://192.168.29.37:3000/task/${id}';
+  // String url = 'http://192.168.29.37:3000/task/${id}';
+  String url = domain + '/task/${id}';
 
   String JWT_TOKEN = await loadToken();
 
@@ -129,12 +126,12 @@ Future<void> updateTaskOnServer(String id, Map<String, dynamic> updates) async {
   );
 
   final obj = jsonDecode(response.body);
-  print(obj);
 }
 
 //DELETE
 Future<void> removeTaskFromServer(String id) async {
-  String url = 'http://192.168.29.37:3000/task/$id';
+  // String url = 'http://192.168.29.37:3000/task/$id';
+  String url = domain + '/task/${id}';
 
   String JWT_TOKEN = await loadToken();
 
@@ -146,12 +143,11 @@ Future<void> removeTaskFromServer(String id) async {
   );
 
   final obj = jsonDecode(response.body);
-
-  print(obj);
 }
 
 Future<void> logoutUserFromServer() async {
-  String url = 'http://192.168.29.37:3000/user/logout';
+  // String url = 'http://192.168.29.37:3000/user/logout';
+  String url = domain + '/user/logout';
 
   String JWT_TOKEN = await loadToken();
 
@@ -164,26 +160,4 @@ Future<void> logoutUserFromServer() async {
   );
 
   final obj = jsonDecode(response.body);
-  print(obj);
-}
-
-Future<void> logoutUser() async {
-  String url1 = 'https://pal-task-manager.herokuapp.com/user/logout';
-  String url2 = 'http://127.0.0.1:3000/user/logout';
-
-  String jwt1 =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWVlNzgzMGViZTUxNTE1ZWFiY2UxMjAiLCJpYXQiOjE2NDMwMTgyODh9.jJ-WJa_7NOfyryRaEFM-aNmUMSO-ICkcZsD0uREsuZg';
-
-  String jwt2 =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWVlNzljMDM5MzFhODYxMWFlZWZhZWYiLCJpYXQiOjE2NDMwMTg2OTB9.KBgIuwG-aZHvgYOt72yTCmHML3VWomP8Hi5g8PrqZHM';
-
-  final response = await http.post(
-    Uri.parse(url1),
-    headers: {
-      'content-type': 'application/json; charset=UTF-8',
-      HttpHeaders.authorizationHeader: jwt1,
-    },
-  );
-
-  print(response.body);
 }

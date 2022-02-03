@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class AuthFormTextField extends StatelessWidget {
@@ -12,23 +14,23 @@ class AuthFormTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
+      width: min(700, size.width),
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColorDark,
         borderRadius: BorderRadius.circular(70),
       ),
-      margin: EdgeInsets.symmetric(
+      margin: const EdgeInsets.symmetric(
         vertical: 5,
       ),
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         vertical: 0,
         horizontal: 15,
       ),
       child: TextField(
+        cursorColor: Theme.of(context).primaryColor,
         controller: controller,
-        style: TextStyle(
-            //color: Color(0xff283618),
-            ),
         decoration: InputDecoration(
           labelText: hint,
           focusedBorder: InputBorder.none,

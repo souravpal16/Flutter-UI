@@ -20,20 +20,20 @@ class Body extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Row(
             //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: const [
               userNameTextWidget(),
               Spacer(),
               ToggleThemeWidget(),
               LogoutIcon(),
             ],
           ),
-          SizedBox(height: 20),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
+          const SizedBox(height: 20),
           TaskListWidget(),
         ],
       ),
@@ -56,9 +56,9 @@ class _ToggleThemeWidgetState extends State<ToggleThemeWidget> {
   Widget build(BuildContext context) {
     return Switch(
       inactiveThumbColor: kBannerColorDark,
-      inactiveTrackColor: kPrimaryColor1,
+      inactiveTrackColor: kPrimaryColor1Light,
       activeColor: Colors.black,
-      activeTrackColor: kBannerColor,
+      activeTrackColor: kBannerColorLight,
       value: _value,
       onChanged: (value) {
         Provider.of<ThemeProvider>(context, listen: false).toggle();

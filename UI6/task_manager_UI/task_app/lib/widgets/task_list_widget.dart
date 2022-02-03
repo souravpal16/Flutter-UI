@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:task_app/constants.dart';
 import '../providers/task_provider.dart';
 import '../models/task.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +57,7 @@ class MainTaskListWidget extends StatelessWidget {
                 .changeTaskStatus(index);
           },
           child: Container(
-            margin: EdgeInsets.symmetric(
+            margin: const EdgeInsets.symmetric(
               vertical: 5,
               horizontal: 5,
             ),
@@ -82,10 +81,10 @@ class TaskListHeadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(
+      margin: const EdgeInsets.symmetric(
         horizontal: 5,
       ),
-      child: Text(
+      child: const Text(
         'TODAY\'S TASKS',
         //'${tasks.length} Tasks',
         style: TextStyle(
@@ -116,7 +115,7 @@ class TaskTileWidget extends StatelessWidget {
       key: ValueKey<String>(task.id),
       background: Container(
         color: Colors.red,
-        child: Icon(
+        child: const Icon(
           Icons.delete,
         ),
       ),
@@ -124,12 +123,12 @@ class TaskTileWidget extends StatelessWidget {
         Provider.of<TaskData>(context, listen: false).removeTask(task);
       },
       child: Container(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
           top: 10,
           bottom: 10,
           left: 10,
         ),
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 10,
         ),
         decoration: BoxDecoration(
@@ -174,7 +173,7 @@ class TaskTileWidget extends StatelessWidget {
                     : null,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Text(

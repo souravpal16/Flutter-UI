@@ -8,7 +8,7 @@ Future<String> loadName() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   name = prefs.getString('name') ?? 'error';
 
-  print('Name: ' + name);
+  //print('Name: ' + name);
 
   return name;
 }

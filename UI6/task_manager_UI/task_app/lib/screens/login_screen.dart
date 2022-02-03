@@ -94,7 +94,7 @@ class ButtonRow extends StatelessWidget {
           },
           child: AuthButtonWidget(
             title: 'Sign Up',
-            color: kPrimaryColor1,
+            color: kPrimaryColor1Light,
           ),
         ),
         GestureDetector(

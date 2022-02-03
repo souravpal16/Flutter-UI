@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:task_app/screens/login_screen.dart';
 import 'package:task_app/screens/user_screen.dart';
 import '../utils/token_shared_preference.dart';
-import '../constants.dart';
 import '../widgets/banner_text.dart';
 
 class LandingPage extends StatefulWidget {
@@ -35,14 +34,11 @@ class _LandingPageState extends State<LandingPage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data == false) {
-            print('NO token');
             return LoginScreen();
           } else {
-            print('Yes token');
             return UserScreen();
           }
         } else if (snapshot.hasError) {}
-        print('Normal branding page');
         return Scaffold(
           backgroundColor: Theme.of(context).primaryColor,
           body: BannerText(),

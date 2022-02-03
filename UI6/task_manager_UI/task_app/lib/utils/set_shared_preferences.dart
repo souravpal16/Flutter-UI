@@ -11,8 +11,8 @@ Future<void> setSharedPreferences(Response response) async {
   String token = obj['token'];
   String email = obj['user']['email'];
 
-  print(name);
-  print(token);
+  // print(name);
+  // print(token);
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   await prefs.setString('token', token);

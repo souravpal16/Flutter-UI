@@ -8,7 +8,7 @@ class OkButtonChipWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: 10,
         vertical: 5,
       ),
@@ -16,7 +16,7 @@ class OkButtonChipWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         color: Colors.grey.shade300,
       ),
-      child: Text(
+      child: const Text(
         'OK',
         style: TextStyle(
           color: Colors.green,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import './banner_text.dart';
-import '../constants.dart';
 
 class BannerWidget extends StatelessWidget {
   const BannerWidget({
@@ -16,7 +15,7 @@ class BannerWidget extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(90),
           bottomRight: Radius.circular(90),
         ),

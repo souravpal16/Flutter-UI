@@ -71,7 +71,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       },
                       child: AuthButtonWidget(
                         title: 'Sign Up',
-                        color: kPrimaryColor1,
+                        color: kPrimaryColor1Light,
                       ),
                     )
                   ],
